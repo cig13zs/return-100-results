@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Return 100 Results",
+  "version": "1.0.0",
+  "description": "Google removed 100-results-per-page. This loads the next pages inline so you can browse ~100 results as one long list again.",
+  "icons": { "16": "icons/icon16.png", "48": "icons/icon48.png", "128": "icons/icon128.png" },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://www.google.com/search*",
+        "*://www.google.co.uk/search*",
+        "*://www.google.ca/search*",
+        "*://www.google.com.au/search*",
+        "*://www.google.de/search*",
+        "*://www.google.fr/search*",
+        "*://www.google.es/search*",
+        "*://www.google.it/search*",
+        "*://www.google.nl/search*",
+        "*://www.google.co.in/search*",
+        "*://www.google.com.br/search*",
+        "*://www.google.com.ph/search*",
+        "*://www.google.com.mx/search*",
+        "*://www.google.co.jp/search*"
+      ],
+      "js": ["core.js", "content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": { "default_popup": "popup.html", "default_icon": { "16": "icons/icon16.png", "48": "icons/icon48.png", "128": "icons/icon128.png" } }
+}
