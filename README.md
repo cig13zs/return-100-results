@@ -61,4 +61,13 @@ real captcha is detected via the response redirect (not a brittle HTML scan).
   can bring 100 results back — the results would simply not exist to fetch.
 - **Covers the main Google TLDs;** add a line to the manifest for others.
 
+## More tools
+
+- **[Carryover](https://github.com/cig13zs/carryover)** — AI chat context transfer for ChatGPT, DeepSeek & Grok
+- **[Invisibles](https://github.com/cig13zs/invisibles)** — reveal & strip hidden Unicode from text
+- **[Rinse](https://github.com/cig13zs/rinse)** — see the GPS in a photo, then wash it off
+- **[Return Google Cache](https://github.com/cig13zs/return-google-cache)** — put the Cached link back on Google results
+
+All free, all offline, all open source. [More →](https://github.com/cig13zs/About-Me)
+
 MIT licensed. Do what you like with it.
