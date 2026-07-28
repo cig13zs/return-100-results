@@ -1,14 +1,10 @@
 /*
- * Return 100 Results — core logic.
+ * Core logic. &num=100 is gone but &start= pagination still works, so we fetch
+ * the next page and append its results inline.
  *
- * Google disabled &num=100 in 2025, so you can't get 100 results on one page
- * anymore. Page-by-page pagination (&start=10,20,…) still works, so this
- * restores the *effect*: fetch the next page and append its results inline,
- * up to 100, giving one long scrollable list again.
- *
- *   nextPageUrl(href, step) -> URL for the next page (pure, tested)
- *   extractResults(htmlString) -> the #rso results block from a fetched page
- *   looksBlocked(htmlString) -> true if Google served a captcha/sorry page
+ *   nextPageUrl(href, step)    -> URL for the next page
+ *   extractResults(htmlString) -> the #rso block from a fetched page
+ *   looksBlocked(htmlString)   -> true on a captcha / sorry page
  */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) module.exports = factory();
@@ -29,8 +25,8 @@
     return parseInt(u.searchParams.get('start') || '0', 10) || 0;
   }
 
-  // Google shows a captcha/"unusual traffic" interstitial when it thinks you're
-  // a bot. Detect it so we stop cleanly instead of appending garbage.
+  // Detect the "unusual traffic" interstitial so we stop instead of appending
+  // its markup as results.
   function looksBlocked(html) {
     return /\/sorry\/index|detected unusual traffic|id="recaptcha"/i.test(html);
   }

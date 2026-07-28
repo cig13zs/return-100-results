@@ -1,6 +1,6 @@
 /*
- * Covers the pure pagination + block-detection logic. The fetch/parse/append
- * is verified against live Google in the browser. Run: node core.test.js
+ * Covers pagination and block detection. The fetch/parse/append path is checked
+ * in the browser against live Google. Run: node core.test.js
  */
 var assert = require('assert');
 var R = require('./extension/core.js');
@@ -21,4 +21,4 @@ assert.strictEqual(R.looksBlocked('<div id="recaptcha"></div>'), true);
 // must NOT false-positive on a normal results page that merely embeds a recaptcha script token
 assert.strictEqual(R.looksBlocked('<div id="rso"><div class="g">result</div></div><script>grecaptcha</script>'), false);
 
-console.log('ok — pagination and block-detection checks passed');
+console.log('ok, pagination and block-detection checks passed');

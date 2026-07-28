@@ -1,11 +1,9 @@
 /*
- * Adds a "Load next 10 ↓" bar under Google's results. Each click fetches the
- * next page (same query, start+10), lifts its #rso block, and appends the
- * results inline — up to 100 — so you browse one long list instead of clicking
- * through pages. Stops politely if Google shows a captcha.
+ * Adds a "Load next 10" bar under Google's results. Each click fetches the next
+ * page, lifts its #rso block and appends it, up to 100. Stops if Google shows a
+ * captcha.
  *
- * Same-origin fetch of google.com from a google.com page: no permissions, no
- * third party, nothing leaves the browser.
+ * Same-origin fetch from a google.com page, so no permissions are needed.
  */
 (function () {
   var MAX = 100;               // stop at ~100 results, like the old &num=100
@@ -45,21 +43,22 @@
       // fetch exactly start=loadedTo (page 1 shows 0-9, so loadedTo starts at 10)
       var u = new URL(location.href); u.searchParams.set('start', String(loadedTo));
       var resp = await fetch(u.toString(), { credentials: 'include' });
-      // a real block redirects to /sorry/ or returns 429; the HTML scan is a weak fallback
+      // A real block redirects to /sorry/ or returns 429. The HTML scan is a
+      // weak fallback.
       var blocked = resp.status === 429 || (resp.redirected && /\/sorry\//.test(resp.url));
       var html = await resp.text();
       var next = R100.extractResults(html);
       var kids = next ? Array.prototype.slice.call(next.children) : [];
       var hasResults = kids.some(function (k) { return k.querySelector && k.querySelector('h3'); });
       if (!hasResults) {
-        if (blocked || R100.looksBlocked(html)) note.textContent = 'Google asked for a captcha — open the next page normally to continue.';
+        if (blocked || R100.looksBlocked(html)) note.textContent = 'Google asked for a captcha. Open the next page normally to continue.';
         else { note.textContent = 'No more results.'; btn.style.display = 'none'; }
         return;
       }
       kids.forEach(function (n) { rso.appendChild(document.importNode(n, true)); });
       loadedTo += STEP;
       note.textContent = 'showing ' + loadedTo + ' results';
-      if (loadedTo >= MAX) { btn.style.display = 'none'; note.textContent = loadedTo + ' results — that’s the old 100.'; }
+      if (loadedTo >= MAX) { btn.style.display = 'none'; note.textContent = loadedTo + ' results, the old 100.'; }
       else { label(); }
     } catch (e) {
       note.textContent = 'Could not load the next page.';
