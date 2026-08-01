@@ -19,6 +19,7 @@
     '.r100-bar{display:flex;flex-direction:column;align-items:center;gap:8px;margin:26px 0 40px;font:14px system-ui,sans-serif}' +
     '.r100-btn{padding:11px 26px;border:1px solid #dadce0;border-radius:20px;background:#fff;color:#1a73e8;font-weight:600;cursor:pointer}' +
     '.r100-btn:hover{background:#f8faff;box-shadow:0 1px 3px rgba(0,0,0,.1)}' +
+    '.r100-btn:focus-visible{outline:3px solid #1a73e8;outline-offset:2px}' +
     '.r100-btn:disabled{opacity:.6;cursor:default}' +
     '.r100-note{color:#70757a;font-size:12.5px}' +
     '@media (prefers-color-scheme:dark){.r100-btn{background:#202124;color:#8ab4f8;border-color:#3c4043}.r100-note{color:#9aa0a6}}';
@@ -28,8 +29,11 @@
   bar.className = 'r100-bar';
   var btn = document.createElement('button');
   btn.className = 'r100-btn';
+  btn.type = 'button';
   var note = document.createElement('div');
   note.className = 'r100-note';
+  note.setAttribute('role', 'status');
+  note.setAttribute('aria-live', 'polite');
   bar.appendChild(btn); bar.appendChild(note);
   rso.parentNode.insertBefore(bar, rso.nextSibling);
 
@@ -47,12 +51,17 @@
       // weak fallback.
       var blocked = resp.status === 429 || (resp.redirected && /\/sorry\//.test(resp.url));
       var html = await resp.text();
+      if (blocked || R100.looksBlocked(html)) {
+        note.textContent = 'Google asked for a captcha. Open the next page normally to continue.';
+        btn.style.display = 'none';
+        return;
+      }
       var next = R100.extractResults(html);
       var kids = next ? Array.prototype.slice.call(next.children) : [];
       var hasResults = kids.some(function (k) { return k.querySelector && k.querySelector('h3'); });
       if (!hasResults) {
-        if (blocked || R100.looksBlocked(html)) note.textContent = 'Google asked for a captcha. Open the next page normally to continue.';
-        else { note.textContent = 'No more results.'; btn.style.display = 'none'; }
+        note.textContent = 'No more results.';
+        btn.style.display = 'none';
         return;
       }
       kids.forEach(function (n) { rso.appendChild(document.importNode(n, true)); });

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Return 100 Results",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Google removed 100-results-per-page. This loads the next pages inline so you can browse ~100 results as one long list again.",
   "icons": { "16": "icons/icon16.png", "48": "icons/icon48.png", "128": "icons/icon128.png" },
   "content_scripts": [
