@@ -8,6 +8,10 @@ clicking through pages 2, 3 and 4.
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
 [![Tests](https://img.shields.io/github/actions/workflow/status/cig13zs/return-100-results/test.yml?style=flat-square&label=tests)](https://github.com/cig13zs/return-100-results/actions)
 
+> **Development moved:** [Search Restore](https://github.com/cig13zs/search-restore)
+> combines this result loader with optional archive links in one maintained
+> extension. This repository remains available as the historical focused build.
+
 **[cig13zs.github.io/return-100-results](https://cig13zs.github.io/return-100-results/)**
 
 `&num=100` was how you got a hundred results on one page, which mattered for
@@ -71,6 +75,6 @@ Covers the main Google TLDs. Add a line to the manifest for others.
 - [Carryover](https://github.com/cig13zs/carryover), AI chat context transfer for ChatGPT, DeepSeek and Grok
 - [Invisibles](https://github.com/cig13zs/invisibles), reveal and strip hidden Unicode from text
 - [Rinse](https://github.com/cig13zs/rinse), see the GPS in a photo and wash it off
-- [Return Google Cache](https://github.com/cig13zs/return-google-cache), put the Cached link back on Google results
+- [Search Restore](https://github.com/cig13zs/search-restore), this loader plus optional archive links in one extension
 
 Not affiliated with Google. MIT licensed. [Ko-fi](https://ko-fi.com/jju1s).
